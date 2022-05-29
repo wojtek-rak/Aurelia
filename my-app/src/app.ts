@@ -1,28 +1,16 @@
+import {PLATFORM} from 'aurelia-pal';
+  
 export class App {
-  heading = 'Todos';
-  todos = [];
-  todoDescription = '';
+  router: any;
+  configureRouter(config, router){
+    config.title = 'Contacts';
+    config.options.pushState = true;
+    config.options.root = '/';
+    config.map([
+      { route: '',              moduleId: PLATFORM.moduleName('no-selection'),   title: 'Select' },
+      { route: 'contacts/:id',  moduleId: PLATFORM.moduleName('contact-detail'), name:'contacts' }
+    ]);
 
-  constructor() {
-    this.heading = 'Todos';
-    this.todos = [];
-    this.todoDescription = '';
-  }
-
-  addTodo() {
-    if (this.todoDescription) {
-      this.todos.push({
-        description: this.todoDescription,
-        done: false
-      });
-      this.todoDescription = '';
-    }
-  }
-
-  removeTodo(todo) {
-    let index = this.todos.indexOf(todo);
-    if (index !== -1) {
-      this.todos.splice(index, 1);
-    }
+    this.router = router;
   }
 }
